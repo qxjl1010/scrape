@@ -15,7 +15,7 @@ def load_driver_path():
 
 #Loads all the urls from the URLS.txt file and appends them to the array of urls
 def load_urls_from_text_file():
-    urls_file = open('URLS.txt', 'r')
+    urls_file = open('COSTCO_URLS.txt', 'r')
     urls = urls_file.readlines()
     for url in urls:
         URLS.append(url.strip())
@@ -33,7 +33,7 @@ def load_data(webdriver):
     for url in URLS:
         #Get the contents of the URL
         webdriver.get(url)
-        
+        print(url)
         # Jialong add
         # select element by id:
         webdriver.find_element_by_css_selector("input[type='radio'][name='region'][value='QC']").click()
@@ -43,6 +43,8 @@ def load_data(webdriver):
         #returns the inner HTML as a string
         innerHTML = webdriver.page_source
         #turns the html into an object to use with BeautifulSoup library
+        # print("innerHTML is:")
+        # print(innerHTML)
         soup = BeautifulSoup(innerHTML, "html.parser")
 
         extract_and_load_all_data(soup)
@@ -149,7 +151,7 @@ def get_embedded_images(soup):
 # Load data to csv
 def extract_and_load_all_data(soup):
     # field_names = ["Meta tags", "Name", "Description", "Specifications", "Category", "Price", "Image"]
-    output_data = open('OutputData.txt', 'a')
+    output_data = open('COSTCO_OutputData.txt', 'a')
     '''
     writer = csv.DictWriter(output_data, field_names,
         delimiter='\n')#,
